@@ -1,0 +1,45 @@
+services:
+  product_producer:
+    build: product-producer/
+    container_name: product_producer
+    env_file: ../.env
+    environment:
+      - KAFKA_URL=${KAFKA_URL}
+    networks:
+      - "strapi"
+
+  product_consumer:
+    build: product-consumer/
+    container_name: product_consumer
+    env_file: ../.env
+    environment:
+      - STRAPI_URL=${STRAPI_URL}
+      - KAFKA_URL=${KAFKA_URL}
+      - STRAPI_TOKEN=${API_TOKEN}
+    networks:
+      - "strapi"
+
+  event_producer:
+      build: event-producer/
+      container_name: event_producer
+      env_file: ../.env
+      environment:
+        - KAFKA_URL=${KAFKA_URL}
+      networks:
+        - "strapi"
+
+  event_consumer:
+    build: event-consumer/
+    container_name: event_consumer
+    env_file: ../.env
+    environment:
+      - STRAPI_URL=${STRAPI_URL}
+      - KAFKA_URL=${KAFKA_URL}
+      - STRAPI_TOKEN=${API_TOKEN}
+    networks:
+      - "strapi"
+
+networks:
+  strapi:
+    external: true
+    name: Strapi
