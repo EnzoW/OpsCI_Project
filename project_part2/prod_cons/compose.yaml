@@ -7,6 +7,8 @@ services:
       - KAFKA_URL=${KAFKA_URL}
     networks:
       - "strapi"
+    depends_on:
+      - product_consumer
 
   product_consumer:
     build: product-consumer/
@@ -27,10 +29,38 @@ services:
         - KAFKA_URL=${KAFKA_URL}
       networks:
         - "strapi"
+      depends_on:
+        - event_consumer
 
   event_consumer:
     build: event-consumer/
     container_name: event_consumer
+    env_file: ../.env
+    environment:
+      - STRAPI_URL=${STRAPI_URL}
+      - KAFKA_URL=${KAFKA_URL}
+      - STRAPI_TOKEN=${API_TOKEN}
+    networks:
+      - "strapi"
+
+  stock_producer:
+    build: stock-producer/
+    container_name: stock_producer
+    env_file: ../.env
+    environment:
+      - STRAPI_URL=${STRAPI_URL}
+      - KAFKA_URL=${KAFKA_URL}
+      - STRAPI_TOKEN=${API_TOKEN}
+    volumes:
+      - ./stock-producer/stocks.csv:/stocks.csv
+    networks:
+      - "strapi"
+    depends_on:
+      - stock_consumer
+
+  stock_consumer:
+    build: stock-consumer/
+    container_name: stock_consumer
     env_file: ../.env
     environment:
       - STRAPI_URL=${STRAPI_URL}

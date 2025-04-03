@@ -1,6 +1,6 @@
 # OpsCI_Project
 
-## Enzo Wesqui 3520224
+## Enzo Wesquy 3520224
 ## Pierre Ansar 21208870
 
 # Partie 1 : Création d'une API avec Strapi connectée à une base de données PostgreSQL et implémentation d'un frontend React affichant les informations sur les produits via l'API de Strapi  
@@ -39,3 +39,24 @@ Les **producers** récupèrent les informations sur les produits ou les événem
 Les **consumers** sont connectés au broker Kafka et récupèrent en temps réel les messages envoyés par les producers dans les topics. Ils utilisent ensuite les informations relatives aux produits et événements contenues dans ces messages pour créer de nouveaux objets dans la base de données en appelant directement l'API de Strapi.  
 
 Grâce au token Strapi, les consumers ont les droits nécessaires pour créer de nouveaux objets.  
+
+# Commandes
+
+Le projet peut être lancé avec la commande : 
+
+```shell
+docker compose up
+```
+
+Une fois tous les services démarrés, on doit lancer les consommateurs (pour les évènements) :
+
+```shell
+cd prod_cons/
+docker compose up product_consumer event_consumer stock_consumer
+```
+
+Puis les producteurs peuvent être (re)-lancés :
+
+```shell
+docker compose up product_producer event_producer stock_producer
+```
