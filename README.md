@@ -2,6 +2,7 @@
 
 ## Enzo Wesquy 3520224
 ## Pierre Ansar 21208870
+## https://github.com/EnzoW/OpsCI_Project.git
 
 # Partie 1 : Création d'une API avec Strapi connectée à une base de données PostgreSQL et implémentation d'un frontend React affichant les informations sur les produits via l'API de Strapi  
 
